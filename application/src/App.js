@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Tabs from './components/Tabs/Tabs';
+import Navbar from './components/NavBar/NavBar';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from './components/theme';
 import ApolloClient from 'apollo-boost';
@@ -14,6 +15,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <MuiThemeProvider theme={theme}>
+          <Navbar />
           <Tabs />
         </MuiThemeProvider>
       </ApolloProvider>
