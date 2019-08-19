@@ -2,8 +2,17 @@ const graphql = require('graphql');
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLBoolean } = graphql;
 
+const Apps = require('../models/app');
 const Movies = require('../models/movie');
 const Directors = require('../models/director');
+
+const AppType = new GraphQLObjectType({
+	name: 'App',
+	fields: () => ({
+		id: { type: GraphQLID },
+		name: { type: new GraphQLNonNull(GraphQLString) },
+	}),
+})
 
 const MovieType = new GraphQLObjectType({
   name: 'Movie',
@@ -125,37 +134,51 @@ const Mutation = new GraphQLObjectType({
 });
 
 const Query = new GraphQLObjectType({
-  name: 'Query',
-  fields: {
-    movie: {
-      type: MovieType,
-      args: { id: { type: GraphQLID } },
-      resolve(parent, { id }) {
+	name: 'Query',
+	fields: {
+		app: {
+			type: AppType,
+			args: { id: { type: GraphQLID } },
+			resolve(parent, { id }) {
+				return Apps.findById(id);
+			},
+		},
+		movie: {
+			type: MovieType,
+			args: { id: { type: GraphQLID } },
+			resolve(parent, { id }) {
 				return Movies.findById(id);
-      },
-    },
+			},
+		},
 		director: {
-      type: DirectorType,
-      args: { id: { type: GraphQLID } },
-      resolve(parent, { id }) {
+			type: DirectorType,
+			args: { id: { type: GraphQLID } },
+			resolve(parent, { id }) {
 				return Directors.findById(id);
-      },
-    },
+			},
+		},
+		apps: {
+			type: new GraphQLList(AppType),
+			args: { name: { type: GraphQLString } },
+			resolve(parent, { name }) {
+				return Apps.find({ name: { $regex: name, $options: "i" } });
+			}
+		},
 		movies: {
 			type: new GraphQLList(MovieType),
-      args: { name: { type: GraphQLString } },
+      		args: { name: { type: GraphQLString } },
 			resolve(parent, { name }) {
 				return Movies.find({ name: { $regex: name, $options: "i" } });
 			}
 		},
 		directors: {
 			type: new GraphQLList(DirectorType),
-      args: { name: { type: GraphQLString } },
+      		args: { name: { type: GraphQLString } },
 			resolve(parent, { name }) {
 				return Directors.find({ name: { $regex: name, $options: "i" } });
 			}
-		}
-  }
+		},	
+  	}
 });
 
 module.exports = new GraphQLSchema({
