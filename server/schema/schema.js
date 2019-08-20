@@ -1,4 +1,7 @@
 const graphql = require('graphql');
+const appsController = require('../controllers/apps.controller');
+const config = require('../config');
+
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLBoolean } = graphql;
 
@@ -140,6 +143,7 @@ const Query = new GraphQLObjectType({
 			type: AppType,
 			args: { id: { type: GraphQLID } },
 			resolve(parent, { id }) {
+				console.log('!!!!!!!!!!!!id = ', id)
 				return Apps.findById(id);
 			},
 		},
@@ -161,6 +165,20 @@ const Query = new GraphQLObjectType({
 			type: new GraphQLList(AppType),
 			args: { name: { type: GraphQLString } },
 			resolve(parent, { name }) {
+
+				console.log('!!!!!!!!!!!!config.ios_apps_dir = ', config.ios_apps_dir)
+				// appsController.getiOSApps;
+				let appInfo = appsController.readDir(config.ios_apps_dir, '.ipa', 'localhost:3000/', (error, results) => {
+					if (error) {
+						return error;
+						// res.status(400).send(error);
+					} else {
+						console.log('results = ', results)
+						return results;
+						// res.send(results);
+					}
+				});
+				console.log('appInfo = ', appInfo)
 				return Apps.find({ name: { $regex: name, $options: "i" } });
 			}
 		},

@@ -41,7 +41,7 @@ class SimpleTabs extends React.Component {
           </Tabs>
         </AppBar>
         <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={this.handleChangeIndex} >
-          <TabContainer dir={theme.direction}><IosApps /></TabContainer>
+          <TabContainer dir={theme.direction}><IosApps path = "api/ios-apps"/></TabContainer>
           <TabContainer dir={theme.direction}><Movies /></TabContainer>
           <TabContainer dir={theme.direction}><Directors /></TabContainer>
         </SwipeableViews>

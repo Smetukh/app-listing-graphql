@@ -161,7 +161,7 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 	var contents = {};
 	var webPath = "/data/" + (fileExt == ".ipa" ? "ios" : "android");
 	var cachedAppDataPath = "." + webPath + '/metadata.json';
-
+	console.log('fileExt = ' ,fileExt)
 	if (fs.existsSync(cachedAppDataPath)) {
 		contents = JSON.parse(fs.readFileSync(cachedAppDataPath));
 	}
@@ -212,6 +212,7 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 }
 
 function getiOSApps(req, res) {
+	console.log('!!!!!!!getiOSApps = ')
 	var iosPath = config.ios_apps_dir;
 	var ref = req.headers.referer;
 	var domain = ref ? ref.substring(ref.indexOf("://") + 3) : req.headers.host;

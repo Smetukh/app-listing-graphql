@@ -25,7 +25,7 @@ app.use('/graphql', graphqlHTTP({
 app.use(bodyParser.json());
 
 // Set our api routes
-app.use('/api', api);
+// app.use('/api', api);
 
 
 app.use(express.static(path.join(appRoot.path, 'dist')));
