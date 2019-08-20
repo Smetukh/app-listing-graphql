@@ -7,8 +7,9 @@ import { appsQuery } from './queries';
 import { styles } from './styles';
 
 const withGraphQL = graphql(appsQuery, {
-  options: ({ name = '' }) => ({
-    variables: { name },
+  options: ({ name = '', fileSize = 0 }) => ({
+    variables: { name,
+      fileSize },
   }),
 });
 

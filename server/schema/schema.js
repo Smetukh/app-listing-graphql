@@ -164,11 +164,11 @@ const Query = new GraphQLObjectType({
 		apps: {
 			type: new GraphQLList(AppType),
 			args: { name: { type: GraphQLString } },
-			resolve(parent, { name }) {
+			async resolve(parent, { name }) {
 
 				console.log('!!!!!!!!!!!!config.ios_apps_dir = ', config.ios_apps_dir)
 				// appsController.getiOSApps;
-				let appInfo = appsController.readDir(config.ios_apps_dir, '.ipa', 'localhost:3000/', (error, results) => {
+				let appInfo = await appsController.readDir(config.ios_apps_dir, '.ipa', 'localhost:3000/', (error, results) => {
 					if (error) {
 						return error;
 						// res.status(400).send(error);

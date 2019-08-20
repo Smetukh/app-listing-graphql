@@ -6,6 +6,8 @@ const fs = require('fs'),
 	  QRCode = require('qrcode'),
 	  config = require('../config');
 
+const Apps = require('../models/app');
+
 function getInfoFromPkg(filePath, webPath, extension, callback) {
 
 	console.log(`getting info for app: ${ filePath }`);
@@ -161,9 +163,15 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 	var contents = {};
 	var webPath = "/data/" + (fileExt == ".ipa" ? "ios" : "android");
 	var cachedAppDataPath = "." + webPath + '/metadata.json';
-	console.log('fileExt = ' ,fileExt)
 	if (fs.existsSync(cachedAppDataPath)) {
 		contents = JSON.parse(fs.readFileSync(cachedAppDataPath));
+	} else {
+		Apps.deleteMany({}, function(err) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('delete many');
+            }});
 	}
 
 	fs.readdir(localPath, (err, files) => {
@@ -191,6 +199,26 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 
 					contents[fileName] = info;
 					needUpdateCache = true;
+					console.log('contents['+fileName+'] = ', contents[fileName])
+					app = new Apps({
+						
+						build: info.build,
+						bundleId: info.bundleId,
+						dateExpired: info.dateExpired,
+						dateModified: info.dateModified,
+						fileLink: info.fileLink,
+						fileName: info.fileName,
+						name: info.fileName,
+						fileSize: info.fileSize,
+						iconLink: info.iconLink,
+						installLink: info.installLink,
+						qrCode: info.qrCode,
+						team: info.team,
+						timestamp: info.timestamp,
+						version: info.version,
+					});
+					app.save();
+
 					callback(null, info);
 				});
 			} else {
@@ -202,6 +230,7 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 				if (needUpdateCache) {
 					console.log(`updating ${ cachedAppDataPath } file`);
 					fs.writeFileSync(cachedAppDataPath, JSON.stringify(contents));
+					
 				}
 
 				results = results.sort((a, b) => b.timestamp - a.timestamp);
@@ -241,4 +270,4 @@ function getAndroidApps(req, res) {
 	});
 }
 
-module.exports = { getiOSApps, getAndroidApps };
+module.exports = { getiOSApps, getAndroidApps, readDir };

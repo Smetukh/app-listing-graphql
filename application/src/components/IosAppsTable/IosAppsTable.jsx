@@ -81,28 +81,28 @@ class IosAppsTable extends React.Component {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Genre</TableCell>
-                <TableCell align="right">Rate</TableCell>
-                <TableCell>Director</TableCell>
-                <TableCell>Watched</TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell>File Name</TableCell>
+                <TableCell>Date Created</TableCell>
+                <TableCell align="right">Size (MB)</TableCell>
+                <TableCell>Download</TableCell>
+                {/* <TableCell>Watched</TableCell>
+                <TableCell align="right"></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {apps.map(movie => {
+              {apps.map(app => {
                 return (
-                  <TableRow key={movie.id}>
-                    <TableCell component="th" scope="row">{movie.name}</TableCell>
-                    <TableCell>{movie.genre}</TableCell>
-                    <TableCell align="right">{movie.rate}</TableCell>
+                  <TableRow key={app.id}>
+                    <TableCell component="th" scope="row">{app.name}</TableCell>
+                    <TableCell>{app.dateModified}</TableCell>
+                    <TableCell align="right">{app.fileSize}</TableCell>
                     {/* <TableCell>{movie.director.name}</TableCell> */}
                     <TableCell>
-                      <Checkbox checked={movie.watched} disabled />
+                      <Checkbox checked={app.watched} disabled />
                     </TableCell>
                     <TableCell align="right">
                       <>
-                        <IconButton color="inherit" onClick={(e) => this.handleClick(e, movie)}>
+                        <IconButton color="inherit" onClick={(e) => this.handleClick(e, app)}>
                           <MoreIcon />
                         </IconButton>
                         <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} >

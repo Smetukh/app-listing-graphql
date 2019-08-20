@@ -2,11 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const appSchema = new Schema({
+  build: String,
+  bundleId: String,
+  dateExpired: String,
+  dateModified: String,
+  fileLink: String,
+  fileName: String,
   name: String,
-  // genre: String,
-  // directorId: String,
-  // rate: Number,
-  // watched: Boolean,
+  fileSize: Number,
+  iconLink: String,
+  installLink: String,
+  qrCode: String,
+  team: String,
+  timestamp: Number,
+  version: String,
 });
 
 module.exports = mongoose.model('App', appSchema);
