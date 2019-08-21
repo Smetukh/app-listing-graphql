@@ -12,6 +12,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import MoviesDialog from '../MoviesDialog/MoviesDialog';
 import MoviesSearch from '../MoviesSearch/MoviesSearch';
@@ -92,26 +97,98 @@ class IosAppsTable extends React.Component {
             <TableBody>
               {apps.map(app => {
                 return (
-                  <TableRow key={app.id}>
-                    <TableCell component="th" scope="row">{app.fileName}</TableCell>
-                    <TableCell>{app.dateModified}</TableCell>
-                    <TableCell align="right">{app.fileSize}</TableCell>
-                    {/* <TableCell>{movie.director.name}</TableCell> */}
-                    <TableCell>
-                      <Checkbox checked={app.watched} disabled />
-                    </TableCell>
-                    <TableCell align="right">
+                  <ExpansionPanel key={`${app.id}-expansion`}>
+                    <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls={`${app.id}-content`}
+                      id={`${app.id}-header`}
+                    >
+                      
+                      <TableRow key={app.id}>
                       <>
-                        <IconButton color="inherit" onClick={(e) => this.handleClick(e, app)}>
-                          <MoreIcon />
-                        </IconButton>
-                        <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} >
-                          <MenuItem onClick={this.handleEdit}><CreateIcon /> Edit</MenuItem>
-                          <MenuItem onClick={this.handleDelete}><DeleteIcon/> Delete</MenuItem>
-                        </Menu>
-                      </>
-                    </TableCell>
-                  </TableRow>
+                        <TableCell component="th" scope="row">{app.fileName}</TableCell>
+                        <TableCell>{app.dateModified}</TableCell>
+                        <TableCell align="right">{app.fileSize}</TableCell>
+                        {/* <TableCell>{movie.director.name}</TableCell> */}
+                        <TableCell>
+                          <Checkbox checked={app.watched} disabled />
+                        </TableCell>
+                        <TableCell align="right">
+                          <>
+                            <IconButton color="inherit" onClick={(e) => this.handleClick(e, app)}>
+                              <MoreIcon />
+                            </IconButton>
+                            <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} >
+                              <MenuItem onClick={this.handleEdit}><CreateIcon /> Edit</MenuItem>
+                              <MenuItem onClick={this.handleDelete}><DeleteIcon/> Delete</MenuItem>
+                            </Menu>
+                          </>
+                        </TableCell>
+                        </>
+                      </TableRow>
+                      
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                    <TableRow key={app.id} className={classes.expanded}>
+                      <>
+                        <TableCell component="th" scope="row">
+                        <ul>
+                          <li>
+                            {/* <i class="fas fa-code-branch"></i> */}
+                            Version: { app.version }
+                          </li>
+                          <li>
+                            {/* <i class="fas fa-first-aid"></i> */}
+                            Build: { app.build }
+                          </li>
+                          <li>
+                            {/* <i class="far fa-id-card"></i> */}
+                            {/* {{ this.path == 'api/ios-apps' ? 'Bundle' : 'Package' }}  */}
+                            ID: { app.bundleId }
+                          </li>
+                          <li >
+                            {/* <i class="fas fa-user-friends"></i> */}
+                            Team: { app.team }
+                          </li>
+                          <li>
+                             {/* *ngIf="this.path == 'api/ios-apps' && app.dateExpired">
+                            <i class="fas fa-clock"></i> */}
+                            Expiration:  { app.dateExpired }
+                          </li>
+                          <li>
+                            {/* <i class="fas fa-users"></i> */}
+                            User Groups: { app.userGroups }
+                          </li>
+                          {/* <li>
+                            <i class="fas fa-comment"></i>
+                            Description ({ app.description && app.description[this.defaultLanguage] ? this.defaultLanguage : "en_US" }}):
+                            <span [innerHtml] = "app.description && app.description[this.defaultLanguage] | safe: 'html'"></span>
+                          </li> */}
+                        </ul>
+                        </TableCell>
+                        <TableCell>
+                          <a
+                            href="#"
+                            installable="true"
+                            description=""
+                            className={classes.ahref}
+                            // style="float: left; text-align: center"
+                            >
+
+                            <img
+                              src={ app.qrCode }
+                              align="right"
+                              alt="{{ 'No icon' }}"
+                              className={classes.qr}
+                              // style="width:auto; height:150px; border-radius: 20%;" 
+                              ></img>
+                          </a>
+                        </TableCell>
+                        </>
+                      </TableRow>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
                 );
               })}
             </TableBody>
