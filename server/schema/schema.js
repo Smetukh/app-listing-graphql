@@ -3,7 +3,8 @@ const appsController = require('../controllers/apps.controller');
 const config = require('../config');
 
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, 
+	GraphQLNonNull, GraphQLBoolean, GraphQLFloat } = graphql;
 
 const Apps = require('../models/app');
 const Movies = require('../models/movie');
@@ -13,7 +14,19 @@ const AppType = new GraphQLObjectType({
 	name: 'App',
 	fields: () => ({
 		id: { type: GraphQLID },
-		name: { type: new GraphQLNonNull(GraphQLString) },
+		build: { type: new GraphQLNonNull(GraphQLString) },
+		bundleId: { type: new GraphQLNonNull(GraphQLString) },
+		dateExpired: { type: new GraphQLNonNull(GraphQLString) },
+		dateModified: { type: new GraphQLNonNull(GraphQLString) },
+		fileLink: { type: new GraphQLNonNull(GraphQLString) },
+		fileName: { type: new GraphQLNonNull(GraphQLString) },
+		fileSize: { type: new GraphQLNonNull(GraphQLFloat) },
+		iconLink: { type: new GraphQLNonNull(GraphQLString) },
+		installLink: { type: new GraphQLNonNull(GraphQLString) },
+		qrCode: { type: new GraphQLNonNull(GraphQLString) },
+		team: { type: new GraphQLNonNull(GraphQLString) },
+		timestamp: { type: new GraphQLNonNull(GraphQLFloat) },
+		version: { type: new GraphQLNonNull(GraphQLString) },
 	}),
 })
 

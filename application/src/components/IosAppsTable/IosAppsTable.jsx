@@ -93,7 +93,7 @@ class IosAppsTable extends React.Component {
               {apps.map(app => {
                 return (
                   <TableRow key={app.id}>
-                    <TableCell component="th" scope="row">{app.name}</TableCell>
+                    <TableCell component="th" scope="row">{app.fileName}</TableCell>
                     <TableCell>{app.dateModified}</TableCell>
                     <TableCell align="right">{app.fileSize}</TableCell>
                     {/* <TableCell>{movie.director.name}</TableCell> */}
