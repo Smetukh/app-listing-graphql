@@ -56,6 +56,15 @@ class IosAppsTable extends React.Component {
     });
   };
 
+  expandRow = ( id ) => {
+    console.log('id = ', id)
+    this.setState({
+      [id]: !this.state[id] ? true : false,
+ 
+    });
+    console.log('this.state['+[id]+']', this.state[id])
+  };
+
   handleClose = () => { this.setState({ anchorEl: null }); };
 
   handleEdit = () => {
@@ -74,7 +83,7 @@ class IosAppsTable extends React.Component {
     const { classes, data = {} } = this.props;
 
     const { apps = [] } = data;
-    console.log('apps = ' , apps)
+    console.log('id = ' , this.state)
 
     return (
       <>
@@ -95,27 +104,59 @@ class IosAppsTable extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {apps.map(app => {
+              {apps.map(({
+                id,
+                build,
+                bundleId,
+                dateExpired,
+                dateModified,
+                fileLink,
+                fileName,
+                fileSize,
+                iconLink,
+                installLink,
+                qrCode,
+                team,
+                timestamp,
+                version,
+                userGroups
+
+              }) => {
                 return (
-                  <ExpansionPanel key={`${app.id}-expansion`}>
-                    <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls={`${app.id}-content`}
-                      id={`${app.id}-header`}
-                    >
-                      
-                      <TableRow key={app.id}>
+                  // <ExpansionPanel key={`${app.id}-expansion`}>
+                  //   <ExpansionPanelSummary
+                  //     expandIcon={<ExpandMoreIcon />}
+                  //     aria-controls={`${app.id}-content`}
+                  //     id={`${app.id}-header`}
+                  //   >
                       <>
-                        <TableCell component="th" scope="row">{app.fileName}</TableCell>
-                        <TableCell>{app.dateModified}</TableCell>
-                        <TableCell align="right">{app.fileSize}</TableCell>
+                      <TableRow key={id} onClick={() => this.expandRow(id)}>
+                      <>
+                        <TableCell 
+                        component="th" scope="row">{fileName}</TableCell>
+                        <TableCell>{dateModified}</TableCell>
+                        <TableCell align="right">{fileSize}</TableCell>
                         {/* <TableCell>{movie.director.name}</TableCell> */}
                         <TableCell>
-                          <Checkbox checked={app.watched} disabled />
+                          <Checkbox checked={fileName} disabled />
                         </TableCell>
                         <TableCell align="right">
                           <>
-                            <IconButton color="inherit" onClick={(e) => this.handleClick(e, app)}>
+                          <IconButton color="inherit" onClick={(e) => this.handleClick(e, {id,
+                            build,
+                            bundleId,
+                            dateExpired,
+                            dateModified,
+                            fileLink,
+                            fileName,
+                            fileSize,
+                            iconLink,
+                            installLink,
+                            qrCode,
+                            team,
+                            timestamp,
+                            version,
+                            userGroups})}>
                               <MoreIcon />
                             </IconButton>
                             <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} >
@@ -127,37 +168,37 @@ class IosAppsTable extends React.Component {
                         </>
                       </TableRow>
                       
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                    <TableRow key={app.id} className={classes.expanded}>
+                    {/* // </ExpansionPanelSummary> */}
+                    {/* // <ExpansionPanelDetails> */}
+                    {this.state[id] && <TableRow key={id} className={classes.expanded}>
                       <>
                         <TableCell component="th" scope="row">
                         <ul>
                           <li>
                             {/* <i class="fas fa-code-branch"></i> */}
-                            Version: { app.version }
+                            Version: { version }
                           </li>
                           <li>
                             {/* <i class="fas fa-first-aid"></i> */}
-                            Build: { app.build }
+                            Build: { build }
                           </li>
                           <li>
                             {/* <i class="far fa-id-card"></i> */}
                             {/* {{ this.path == 'api/ios-apps' ? 'Bundle' : 'Package' }}  */}
-                            ID: { app.bundleId }
+                            ID: { bundleId }
                           </li>
                           <li >
                             {/* <i class="fas fa-user-friends"></i> */}
-                            Team: { app.team }
+                            Team: { team }
                           </li>
                           <li>
                              {/* *ngIf="this.path == 'api/ios-apps' && app.dateExpired">
                             <i class="fas fa-clock"></i> */}
-                            Expiration:  { app.dateExpired }
+                            Expiration:  { dateExpired }
                           </li>
                           <li>
                             {/* <i class="fas fa-users"></i> */}
-                            User Groups: { app.userGroups }
+                            User Groups: { userGroups }
                           </li>
                           {/* <li>
                             <i class="fas fa-comment"></i>
@@ -176,7 +217,7 @@ class IosAppsTable extends React.Component {
                             >
 
                             <img
-                              src={ app.qrCode }
+                              src={ qrCode }
                               align="right"
                               alt="{{ 'No icon' }}"
                               className={classes.qr}
@@ -185,10 +226,10 @@ class IosAppsTable extends React.Component {
                           </a>
                         </TableCell>
                         </>
-                      </TableRow>
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
+                      </TableRow>}
+                  {/* //   </ExpansionPanelDetails> */}
+                  {/* // </ExpansionPanel> */}
+                  </>
                 );
               })}
             </TableBody>
