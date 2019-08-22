@@ -6,7 +6,8 @@ const fs = require('fs'),
 	  QRCode = require('qrcode'),
 	  config = require('../config');
 
-const Apps = require('../models/app');
+const Ios = require('../models/app');
+const Android = require('../models/android');
 
 function getInfoFromPkg(filePath, webPath, extension, callback) {
 
@@ -166,12 +167,22 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 	if (fs.existsSync(cachedAppDataPath)) {
 		contents = JSON.parse(fs.readFileSync(cachedAppDataPath));
 	} else {
-		Apps.deleteMany({}, function(err) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log('delete many');
-            }});
+		console.log('1extFiles = ', fileExt)
+		if (fileExt === '.ipa') {
+			Ios.deleteMany({}, function(err) {
+				if (err) {
+					console.log(err)
+				} else {
+					console.log('delete many');
+				}});
+		} else {
+			Android.deleteMany({}, function(err) {
+				if (err) {
+					console.log(err)
+				} else {
+					console.log('delete many');
+			}});
+		}
 	}
 
 	fs.readdir(localPath, (err, files) => {
@@ -199,7 +210,9 @@ function readDir(localPath, fileExt, domain, resultCallback) {
 
 					contents[fileName] = info;
 					needUpdateCache = true;
-					console.log('contents['+fileName+'] = ', contents[fileName])
+					console.log('fileExt = ', fileExt)
+					const Apps = fileExt == '.ipa' ? Ios : Android;
+					console.log('Apps = ', Apps)
 					app = new Apps({
 						
 						build: info.build,

@@ -2,11 +2,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import { graphql } from 'react-apollo';
 
-import { appsQuery } from './queries';
+import { androidsQuery } from './queries';
 
 import { styles } from './styles';
 
-const withGraphQL = graphql(appsQuery, {
+const withGraphQL = graphql(androidsQuery, {
   options: ({ name = '' }) => ({
     variables: { name },
   }),

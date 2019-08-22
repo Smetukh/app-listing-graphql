@@ -2,12 +2,12 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import IosAppsTable from '../IosAppsTable/IosAppsTable';
-import IosAppsForm from '../IosAppsForm/IosAppsForm';
+import AndroidAppsTable from '../AndroidAppsTable/AndroidAppsTable';
+import AndroidAppsForm from '../AndroidAppsForm/AndroidAppsForm';
 
-import withHocs from './IosAppsHoc';
+import withHocs from './AndroidAppsHoc';
 
-class IosApps extends React.Component {
+class AndroidApps extends React.Component {
   state = {
     open: false,
     name: '',
@@ -46,9 +46,9 @@ class IosApps extends React.Component {
 
     return (
       <>
-        <IosAppsForm handleChange={this.handleChange} handleSelectChange={this.handleSelectChange} handleCheckboxChange={this.handleCheckboxChange} selectedValue={{ id, name, genre, watched, rate, directorId }} open={open} onClose={this.handleClose} />
+        <AndroidAppsForm handleChange={this.handleChange} handleSelectChange={this.handleSelectChange} handleCheckboxChange={this.handleCheckboxChange} selectedValue={{ id, name, genre, watched, rate, directorId }} open={open} onClose={this.handleClose} />
         <div className={classes.wrapper}>
-          <IosAppsTable onOpen={this.handleClickOpen} onClose={this.handleClose} />
+          <AndroidAppsTable onOpen={this.handleClickOpen} onClose={this.handleClose} />
           <Fab onClick={() => this.handleClickOpen()} color="primary" aria-label="Add" className={classes.fab}>
             <AddIcon />
           </Fab>
@@ -58,4 +58,4 @@ class IosApps extends React.Component {
   }
 };
 
-export default withHocs(IosApps)
+export default withHocs(AndroidApps)

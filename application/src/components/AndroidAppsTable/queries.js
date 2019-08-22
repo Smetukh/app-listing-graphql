@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
-export const appsQuery = gql`
-  query appsQuery($name: String) {
-    apps(name: $name) {
+export const androidsQuery = gql`
+  query androidsQuery($name: String) {
+    androids(name: $name) {
       id
       build
       bundleId

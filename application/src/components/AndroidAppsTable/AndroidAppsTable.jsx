@@ -21,9 +21,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoviesDialog from '../MoviesDialog/MoviesDialog';
 import MoviesSearch from '../MoviesSearch/MoviesSearch';
 
-import withHocs from './IosAppsTableHoc';
+import withHocs from './AndroidAppsTableHoc';
 
-class IosAppsTable extends React.Component {
+class AndoidAppsTable extends React.Component {
   state = {
     anchorEl: null,
     openDialog: false,
@@ -82,7 +82,7 @@ class IosAppsTable extends React.Component {
 
     const { classes, data = {} } = this.props;
 
-    const { apps = [] } = data;
+    const { androids = [] } = data;
     console.log('id = ' , this.state)
 
     return (
@@ -104,7 +104,7 @@ class IosAppsTable extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {apps.map(({
+              {androids.map(({
                 id,
                 build,
                 bundleId,
@@ -240,4 +240,4 @@ class IosAppsTable extends React.Component {
   }
 };
 
-export default withHocs(IosAppsTable);
+export default withHocs(AndoidAppsTable);

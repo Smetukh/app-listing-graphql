@@ -7,11 +7,32 @@ const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, 
 	GraphQLNonNull, GraphQLBoolean, GraphQLFloat } = graphql;
 
 const Apps = require('../models/app');
+const Androids = require('../models/android');
 const Movies = require('../models/movie');
 const Directors = require('../models/director');
 
 const AppType = new GraphQLObjectType({
 	name: 'App',
+	fields: () => ({
+		id: { type: GraphQLID },
+		build: { type: GraphQLString },
+		bundleId: { type: GraphQLString },
+		dateExpired: { type: GraphQLString },
+		dateModified: { type: GraphQLString },
+		fileLink: { type: GraphQLString },
+		fileName: { type: new GraphQLNonNull(GraphQLString) },
+		fileSize: { type: GraphQLFloat },
+		iconLink: { type: GraphQLString },
+		installLink: { type: GraphQLString },
+		qrCode: { type: GraphQLString },
+		team: { type: GraphQLString },
+		timestamp: { type: GraphQLFloat },
+		version: { type: GraphQLString },
+	}),
+})
+
+const AndroidType = new GraphQLObjectType({
+	name: 'Android',
 	fields: () => ({
 		id: { type: GraphQLID },
 		build: { type: GraphQLString },
@@ -160,6 +181,14 @@ const Query = new GraphQLObjectType({
 				return Apps.findById(id);
 			},
 		},
+		android: {
+			type: AndroidType,
+			args: { id: { type: GraphQLID } },
+			resolve(parent, { id }) {
+				console.log('!!!!!!!!!!!!id = ', id)
+				return Androids.findById(id);
+			},
+		},
 		movie: {
 			type: MovieType,
 			args: { id: { type: GraphQLID } },
@@ -193,6 +222,27 @@ const Query = new GraphQLObjectType({
 				});
 				console.log('appInfo = ', appInfo)
 				return Apps.find({ name: { $regex: name, $options: "i" } });
+			}
+		},
+		androids: {
+			type: new GraphQLList(AndroidType),
+			args: { name: { type: GraphQLString } },
+			async resolve(parent, { name }) {
+
+				console.log('!!!!!!!!!!!!config.ios_apps_dir = ', config.android_apps_dir)
+				// appsController.getiOSApps;
+				let appInfo = await appsController.readDir(config.android_apps_dir, '.apk', 'localhost:3000/', (error, results) => {
+					if (error) {
+						return error;
+						// res.status(400).send(error);
+					} else {
+						console.log('results = ', results)
+						return results;
+						// res.send(results);
+					}
+				});
+				console.log('appInfo = ', appInfo)
+				return Androids.find({ name: { $regex: name, $options: "i" } });
 			}
 		},
 		movies: {

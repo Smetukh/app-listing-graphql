@@ -12,9 +12,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import SaveIcon from '@material-ui/icons/Save';
 
-import withHocs from './IosAppsFormHoc';
+import withHocs from './AndroidAppsFormHoc';
 
-class IosAppsForm extends React.Component {
+class AndoidAppsForm extends React.Component {
   handleClose = () => {
     this.props.onClose();
   };
@@ -95,4 +95,4 @@ class IosAppsForm extends React.Component {
   }
 };
 
-  export default withHocs(IosAppsForm);
+  export default withHocs(AndoidAppsForm);

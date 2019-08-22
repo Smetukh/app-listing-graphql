@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 import { graphql } from 'react-apollo';
 
 import { addMovieMutation, updateMovieMutation } from './mutations';
-import { appsQuery } from '../IosAppsTable/queries';
+import { androidsQuery } from '../AndroidAppsTable/queries';
 import { directorsQuery } from './queries';
 
 import { styles } from './styles';
@@ -14,7 +14,7 @@ const withGraphQL = compose(
       addMovie: movie => mutate({
         variables: movie,
         refetchQueries: [{
-          query: appsQuery,
+          query: androidsQuery,
           variables: { name: '' },
         }],
       }),
@@ -25,7 +25,7 @@ const withGraphQL = compose(
       updateMovie: movie => mutate({
         variables: movie,
         refetchQueries: [{
-          query: appsQuery,
+          query: androidsQuery,
           variables: { name: '' },
         }],
       }),

@@ -8,6 +8,7 @@ import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import CameraIcon from '@material-ui/icons/Camera';
 
 import IosApps from '../IosApps/IosApps';
+import AndroidApps from '../AndroidApps/AndroidApps';
 import Movies from '../Movies/Movies';
 import Directors from '../Directors/Directors';
 
@@ -36,14 +37,16 @@ class SimpleTabs extends React.Component {
         <AppBar position="static">
           <Tabs variant='fullWidth' value={value} onChange={this.handleChange}>
             <Tab label="iOS Apps" icon={<CameraIcon />} />
-            <Tab label="Movies" icon={<CameraIcon />} />
-            <Tab label="Directors" icon={<MovieCreationIcon />} />
+            <Tab label="Android Apps" icon={<CameraIcon />} />
+            {/* <Tab label="Movies" icon={<CameraIcon />} />
+            <Tab label="Directors" icon={<MovieCreationIcon />} /> */}
           </Tabs>
         </AppBar>
         <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={this.handleChangeIndex} >
-          <TabContainer dir={theme.direction}><IosApps path = "api/ios-apps"/></TabContainer>
-          <TabContainer dir={theme.direction}><Movies /></TabContainer>
-          <TabContainer dir={theme.direction}><Directors /></TabContainer>
+          <TabContainer dir={theme.direction}><IosApps /></TabContainer>
+          <TabContainer dir={theme.direction}><AndroidApps /></TabContainer>
+          {/* <TabContainer dir={theme.direction}><Movies /></TabContainer>
+          <TabContainer dir={theme.direction}><Directors /></TabContainer> */}
         </SwipeableViews>
       </div>
     );
