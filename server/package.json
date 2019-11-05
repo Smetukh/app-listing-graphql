@@ -16,7 +16,7 @@
     "express-graphql": "^0.7.1",
     "graphql": "^14.1.1",
     "isomorphic-pkg-reader": "^1.1.21",
-    "mongoose": "^5.4.17",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.18.10",
     "qrcode": "^1.4.1",
     "uuid": "^3.3.2"
